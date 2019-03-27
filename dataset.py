@@ -43,4 +43,11 @@ class Dataset:
         r_negative = list()
         for point in self.negative:
             r_negative.append([1, point.x, point.y])
-        return r_positive, r_negative
+        r_positive_test = list()
+        for point in self.positive_test:
+            r_positive_test.append([1, point.x, point.y])
+        r_negative_test = list()
+        for point in self.negative_test:
+            r_negative_test.append([1, point.x, point.y])
+
+        return r_positive, r_negative, r_positive_test, r_negative_test

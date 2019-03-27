@@ -5,13 +5,14 @@ import matplotlib.pyplot as plt
 
 
 class Perceptron:
-    def __init__(self, filename, learning_param, iterations):
-        self.data = dataset.Dataset(filename, True)
-        self.positive, self.negative = self.data.perceptron_data()
+    def __init__(self, filename, learning_param, iterations, train=700):
+        self.data = dataset.Dataset(filename, train, True)
+        self.positive, self.negative, self.positive_test, self.negative_test = self.data.perceptron_data()
         self.w = np.random.rand(3, 1)
         self.learning_parameter = learning_param
         self.iterations = iterations
         self.gradient_descent(self.iterations, filename.split('.')[0]+str(learning_param)+' '+str(iterations))
+        self.misclassified = self.test()
 
     def get_misclassified_points(self):
         """
@@ -60,8 +61,18 @@ class Perceptron:
         plt.scatter(negative_x, negative_y, color='blue')
         plt.scatter(mis_x, mis_y, color='green')
         plt.scatter([p[1]], [p[2]], color='red')
-        all_x = sorted(positive_x + positive_y)
+        all_x = sorted(positive_x + negative_x)
         all_x = [all_x[0], all_x[len(all_x)-1]]
         plt.plot(all_x, -(self.w[1]/self.w[2]*all_x) - self.w[0]/self.w[2], linewidth=1, color='y')
         plt.savefig(filename)
         plt.show()
+
+    def test(self):
+        misclassified = list()
+        for point in self.positive_test:
+            if np.dot(self.w.transpose(), point) < 0:
+                misclassified.append(point)
+        for point in self.negative_test:
+            if np.dot(self.w.transpose(), point) > 0:
+                misclassified.append(point)
+        return misclassified

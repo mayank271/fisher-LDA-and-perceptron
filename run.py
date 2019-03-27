@@ -15,7 +15,7 @@ if __name__ == '__main__':
     print("Time taken: {}".format(time.time() - start))
     print("W vector: {}".format(f.w))
     print("Threshold value for Dataset 1 is: {}".format(float(f.threshold)))
-    print("Number of misclassified point: {}".format(len(f.misclassified)))
+    print("Number of misclassified points: {}".format(len(f.misclassified)))
     print()
 
     print("Dataset 2...")
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     print("Time taken: {}".format(time.time() - start))
     print("W vector: {}".format(f.w))
     print("Threshold value for Dataset 1 is: {}".format(float(f.threshold)))
-    print("Number of misclassified point: {}".format(len(f.misclassified)))
+    print("Number of misclassified points: {}".format(len(f.misclassified)))
     print()
 
     print("Dataset 3...")
@@ -35,22 +35,23 @@ if __name__ == '__main__':
     print("Time taken: {}".format(time.time() - start))
     print("W vector: {}".format(f.w))
     print("Threshold value for Dataset 1 is: {}".format(float(f.threshold)))
-    print("Number of misclassified point: {}".format(len(f.misclassified)))
+    print("Number of misclassified points: {}".format(len(f.misclassified)))
     print()
 
     # TODO : vary perceptron parameter and code to test perceptron
 
+    learning_param = 0.1
+    iterations = 20
+    percetron_train = 700
     print("-----------------------------------------------")
     print("Running Perceptron...")
     print("Dataset 1...")
 
-    learning_param = 0.1
-    iterations = 20
-
     start = time.time()
-    p = perceptron.Perceptron("datasets\dataset_1.csv", learning_param, iterations)
+    p = perceptron.Perceptron("datasets\dataset_1.csv", learning_param, iterations, percetron_train)
     print("Time Taken: {}".format(time.time() - start))
     print("W vector: {}".format(p.w))
+    print("Number of misclassified points: {}".format(len(p.misclassified)))
     print()
 
     print("Dataset 2...")
@@ -59,6 +60,7 @@ if __name__ == '__main__':
     p = perceptron.Perceptron("datasets\dataset_2.csv", learning_param, iterations)
     print("Time Taken: {}".format(time.time() - start))
     print("W vector: {}".format(p.w))
+    print("Number of misclassified points: {}".format(len(p.misclassified)))
     print()
 
     print("Dataset 3...")
@@ -67,4 +69,5 @@ if __name__ == '__main__':
     p = perceptron.Perceptron("datasets\dataset_3.csv", learning_param, iterations)
     print("Time Taken: {}".format(time.time() - start))
     print("W vector: {}".format(p.w))
+    print("Number of misclassified points: {}".format(len(p.misclassified)))
     print()
