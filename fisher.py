@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 class Fisher:
     def __init__(self, filename):
         self.data = dataset.Dataset(filename)
-        self.median_positive, self.median_negative = self.get_medians()
+        self.mean_positive, self.mean_negative = self.get_means()
         self.w = self.get_w(self.get_covariance_matrix())
         self.transformed_positive_points = list()
         self.transformed_negative_points = list()
@@ -16,33 +16,33 @@ class Fisher:
         self.plot(filename.split('.')[0]+'_fisher.png')
         pass
 
-    def get_medians(self):
+    def get_means(self):
         """
-        :return: Medians (numpy array) for all positive and negative data points
+        :return: means (numpy array) for all positive and negative data points
         """
-        median_x = 0
-        median_y = 0
+        mean_x = 0
+        mean_y = 0
         for point in self.data.positive:
-            median_x += point.x
-            median_y += point.y
-        median_x /= len(self.data.positive)
-        median_y /= len(self.data.positive)
-        median_positive = np.zeros((2, 1))
-        median_positive[0] = median_x
-        median_positive[1] = median_y
+            mean_x += point.x
+            mean_y += point.y
+        mean_x /= len(self.data.positive)
+        mean_y /= len(self.data.positive)
+        mean_positive = np.zeros((2, 1))
+        mean_positive[0] = mean_x
+        mean_positive[1] = mean_y
 
-        median_x = 0
-        median_y = 0
+        mean_x = 0
+        mean_y = 0
         for point in self.data.negative:
-            median_x += point.x
-            median_y += point.y
-        median_x /= len(self.data.negative)
-        median_y /= len(self.data.negative)
-        median_negative = np.zeros((2, 1))
-        median_negative[0] = median_x
-        median_negative[1] = median_y
+            mean_x += point.x
+            mean_y += point.y
+        mean_x /= len(self.data.negative)
+        mean_y /= len(self.data.negative)
+        mean_negative = np.zeros((2, 1))
+        mean_negative[0] = mean_x
+        mean_negative[1] = mean_y
 
-        return median_positive, median_negative
+        return mean_positive, mean_negative
 
     def get_covariance_matrix(self):
         """
@@ -51,21 +51,21 @@ class Fisher:
         variance = np.zeros((2, 2))
         for point in self.data.positive:
             positive_var = np.zeros((2, 1))
-            positive_var[0] = point.x - self.median_positive[0]
-            positive_var[1] = point.y - self.median_positive[1]
+            positive_var[0] = point.x - self.mean_positive[0]
+            positive_var[1] = point.y - self.mean_positive[1]
             variance += np.dot(positive_var, positive_var.transpose())
 
         for point in self.data.negative:
             negative_var = np.zeros((2, 1))
-            negative_var[0] = point.x - self.median_negative[0]
-            negative_var[1] = point.y - self.median_negative[1]
+            negative_var[0] = point.x - self.mean_negative[0]
+            negative_var[1] = point.y - self.mean_negative[1]
             variance += np.dot(negative_var, negative_var.transpose())
 
         return variance
 
     def get_w(self, covar):
         """
-        W = inverse(Covariance)* Difference of Medians
+        W = inverse(Covariance)* Difference of means
         :param covar: Within Class Covariance Matrix
         :return: Weight Matrix
         """
@@ -75,7 +75,7 @@ class Fisher:
         except:
             print("Error while calculating inverse")
 
-        return np.dot(inverse, (self.median_negative - self.median_positive))
+        return np.dot(inverse, (self.mean_negative - self.mean_positive))
 
     def transform_points(self):
         """
