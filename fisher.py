@@ -41,8 +41,6 @@ class Fisher:
         mean_negative = np.zeros((2, 1))
         mean_negative[0] = mean_x
         mean_negative[1] = mean_y
-        print(mean_positive)
-        print(mean_negative)
         return mean_positive, mean_negative
 
     def get_covariance_matrix(self):
