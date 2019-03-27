@@ -5,16 +5,16 @@ import matplotlib.pyplot as plt
 
 
 class Fisher:
-    def __init__(self, filename):
-        self.data = dataset.Dataset(filename)
+    def __init__(self, filename, train=700):
+        self.data = dataset.Dataset(filename, train)
         self.mean_positive, self.mean_negative = self.get_means()
         self.w = self.get_w(self.get_covariance_matrix())
         self.transformed_positive_points = list()
         self.transformed_negative_points = list()
         self.transform_points()
         self.threshold = self.solve()
+        self.misclassified = self.test()
         self.plot(filename.split('.')[0]+'_fisher.png')
-        pass
 
     def get_means(self):
         """
@@ -41,7 +41,8 @@ class Fisher:
         mean_negative = np.zeros((2, 1))
         mean_negative[0] = mean_x
         mean_negative[1] = mean_y
-
+        print(mean_positive)
+        print(mean_negative)
         return mean_positive, mean_negative
 
     def get_covariance_matrix(self):
@@ -127,3 +128,38 @@ class Fisher:
             (2 * np.std(self.transformed_positive_points) ** 2) - np.log(np.std(self.transformed_positive_points) /
                                                                          np.std(self.transformed_positive_points))
         return np.roots([a, b, c])
+
+    def test(self):
+        misclassified = list()
+        for point in self.data.positive_test:
+            p = np.zeros((2, 1))
+            p[0] = self.data.positive[0].x
+            p[1] = self.data.positive[0].y
+            np_point = np.zeros((2, 1))
+            np_point[0] = point.x
+            np_point[1] = point.y
+            val = float((np.dot(self.w.transpose(), np_point)))
+            e_val = float((np.dot(self.w.transpose(), p)))
+            if e_val > self.threshold:
+                if val < self.threshold:
+                    misclassified.append(point)
+            if e_val < self.threshold:
+                if val > self.threshold:
+                    misclassified.append(point)
+        for point in self.data.negative_test:
+            p = np.zeros((2, 1))
+            p[0] = self.data.negative[0].x
+            p[1] = self.data.negative[0].y
+            np_point = np.zeros((2, 1))
+            np_point[0] = point.x
+            np_point[1] = point.y
+            val = float((np.dot(self.w.transpose(), np_point)))
+            e_val = float((np.dot(self.w.transpose(), p)))
+            if e_val > self.threshold:
+                if val < self.threshold:
+                    misclassified.append(point)
+            if e_val < self.threshold:
+                if val > self.threshold:
+                    misclassified.append(point)
+
+        return misclassified

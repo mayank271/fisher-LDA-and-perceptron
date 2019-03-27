@@ -3,31 +3,42 @@ import fisher
 import time
 
 if __name__ == '__main__':
+
+    # TODO: vary fisher parameters - no of training points
+    fisher_train = 700
     print("-----------------------------------------------")
     print("Running Fisher Linear Discriminant...")
     print("Dataset 1...")
     start = time.time()
-    f = fisher.Fisher("datasets\dataset_1.csv")
+    f = fisher.Fisher("datasets\dataset_1.csv", fisher_train)
+    print("Number of training points: {}".format(fisher_train))
     print("Time taken: {}".format(time.time() - start))
     print("W vector: {}".format(f.w))
     print("Threshold value for Dataset 1 is: {}".format(float(f.threshold)))
+    print("Number of misclassified point: {}".format(len(f.misclassified)))
     print()
 
     print("Dataset 2...")
     start = time.time()
-    f = fisher.Fisher("datasets\dataset_2.csv")
+    f = fisher.Fisher("datasets\dataset_2.csv", fisher_train)
+    print("Number of training points: {}".format(fisher_train))
     print("Time taken: {}".format(time.time() - start))
     print("W vector: {}".format(f.w))
-    print("Threshold value for Dataset 2 is: {}".format(float(f.threshold)))
+    print("Threshold value for Dataset 1 is: {}".format(float(f.threshold)))
+    print("Number of misclassified point: {}".format(len(f.misclassified)))
     print()
 
     print("Dataset 3...")
     start = time.time()
-    f = fisher.Fisher("datasets\dataset_3.csv")
+    f = fisher.Fisher("datasets\dataset_3.csv", fisher_train)
+    print("Number of training points: {}".format(fisher_train))
     print("Time taken: {}".format(time.time() - start))
     print("W vector: {}".format(f.w))
-    print("Threshold value for Dataset 3 is: {}".format(float(f.threshold)))
+    print("Threshold value for Dataset 1 is: {}".format(float(f.threshold)))
+    print("Number of misclassified point: {}".format(len(f.misclassified)))
     print()
+
+    # TODO : vary perceptron parameter and code to test perceptron
 
     print("-----------------------------------------------")
     print("Running Perceptron...")
