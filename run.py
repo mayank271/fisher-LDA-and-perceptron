@@ -5,7 +5,7 @@ import time
 if __name__ == '__main__':
 
     # TODO: vary fisher parameters - no of training points
-    fisher_train = 700
+    fisher_train = 1000
     print("-----------------------------------------------")
     print("Running Fisher Linear Discriminant...")
     print("Dataset 1...")
@@ -37,8 +37,6 @@ if __name__ == '__main__':
     print("Threshold value for Dataset 1 is: {}".format(float(f.threshold)))
     print("Number of misclassified points: {}".format(len(f.misclassified)))
     print()
-
-    # TODO : vary perceptron parameter and code to test perceptron
 
     learning_param = 0.1
     iterations = 20

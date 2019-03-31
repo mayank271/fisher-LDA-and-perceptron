@@ -117,15 +117,16 @@ class Fisher:
         :return: Threshold Value
         """
         a = 1 / (2 * np.std(self.transformed_positive_points) **
-                 2) - 1 / (2 * np.std(self.transformed_positive_points) ** 2)
+                 2) - 1 / (2 * np.std(self.transformed_negative_points) ** 2)
         b = np.mean(self.transformed_negative_points) / \
-            (np.std(self.transformed_positive_points) ** 2) - np.mean(self.transformed_positive_points) /\
+            (np.std(self.transformed_negative_points) ** 2) - np.mean(self.transformed_positive_points) /\
             (np.std(self.transformed_positive_points) ** 2)
         c = np.mean(self.transformed_positive_points) ** 2 /\
             (2 * np.std(self.transformed_positive_points) ** 2) - np.mean(self.transformed_negative_points) ** 2 /\
-            (2 * np.std(self.transformed_positive_points) ** 2) - np.log(np.std(self.transformed_positive_points) /
+            (2 * np.std(self.transformed_negative_points) ** 2) - np.log(np.std(self.transformed_negative_points) /
                                                                          np.std(self.transformed_positive_points))
-        return np.roots([a, b, c])
+
+        return np.roots([a, b, c])[0]
 
     def test(self):
         misclassified = list()

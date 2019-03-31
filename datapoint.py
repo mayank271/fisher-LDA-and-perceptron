@@ -5,7 +5,7 @@ class DataPoint:
         self.class_val = cval
 
     def __str__(self):
-        return "{}, {}, Class: ".format(self.x, self.y, self.class_val)
+        return "{}, {}".format(self.x, self.y)
 
     def __repr__(self):
-        return "{}, {}, Class: {}".format(self.x, self.y, self.class_val)
+        return "{}, {}".format(self.x, self.y)
