@@ -4,7 +4,6 @@ import time
 
 if __name__ == '__main__':
 
-    # TODO: vary fisher parameters - no of training points
     fisher_train = 1000
     print("-----------------------------------------------")
     print("Running Fisher Linear Discriminant...")
@@ -39,7 +38,7 @@ if __name__ == '__main__':
     print()
 
     learning_param = 0.1
-    iterations = 20
+    iterations = 1000
     percetron_train = 700
     print("-----------------------------------------------")
     print("Running Perceptron...")

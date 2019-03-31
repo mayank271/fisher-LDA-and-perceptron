@@ -126,7 +126,15 @@ class Fisher:
             (2 * np.std(self.transformed_negative_points) ** 2) - np.log(np.std(self.transformed_negative_points) /
                                                                          np.std(self.transformed_positive_points))
 
-        return np.roots([a, b, c])[0]
+        thres1 = np.roots([a, b, c])[0]
+        thres2 = np.roots([a, b, c])[1]
+        if thres1 > self.transformed_positive_points[0]:
+            if thres1 < self.transformed_negative_points[0]:
+                return thres1
+        if thres1 < self.transformed_positive_points[0]:
+            if thres1 > self.transformed_negative_points[0]:
+                return thres1
+        return thres2
 
     def test(self):
         misclassified = list()
