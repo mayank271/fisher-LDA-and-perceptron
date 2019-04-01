@@ -1,0 +1,2 @@
+700 Pts .1 and 20 iterations
+0,4 and 0 misclassifications
